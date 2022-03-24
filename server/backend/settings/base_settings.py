@@ -65,7 +65,7 @@ INSTALLED_APPS = [
 
   # apps
   "home.apps.HomeConfig",
-  "users.apps.UsersConfig",
+  "account.apps.AccountConfig",
 ]
 
 MIDDLEWARE = [
@@ -168,6 +168,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'account.UserAccount'
 
 __all__ = [i for i in dir() if i.isupper()]

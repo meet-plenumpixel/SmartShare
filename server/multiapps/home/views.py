@@ -1,7 +1,7 @@
 # from django.shortcuts import render
 from django.urls import reverse_lazy
 from utils.multi_form_view import MultiFormView
-from users.forms import UserRegisterForm
+from account.forms import UserRegisterForm
 # Create your views here.
 
 
