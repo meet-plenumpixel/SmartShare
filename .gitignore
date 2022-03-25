@@ -164,5 +164,8 @@ cython_debug/
 # Exclude static files from project-app after collectstatic
 static/
 
-
+# contain local environment variables
 server/backend/environ/Dev.env
+
+# scripts uses for generate dummy data
+scripts/
