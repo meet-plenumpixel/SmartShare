@@ -9,7 +9,3 @@ from account.forms import UserRegisterForm
 class HomeTemplateView(MultiFormView):
   template_name = 'home/index.html'
   success_url = reverse_lazy('home')
-
-  form_classes = {
-    'user': UserRegisterForm
-  }

@@ -61,7 +61,8 @@ INSTALLED_APPS = [
 
   # third party
   "widget_tweaks",
-  # "crispy_forms",
+  "crispy_forms",
+  "crispy_bootstrap5",
 
   # apps
   "account.apps.AccountConfig",
@@ -165,8 +166,15 @@ MEDIA_URL = "/assets/media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# extend UserAccount Model to AbstractUser 
 
 AUTH_USER_MODEL = 'account.UserAccount'
+
+
+# third party package settings
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 
 __all__ = [i for i in dir() if i.isupper()]
