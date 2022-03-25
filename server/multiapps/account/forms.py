@@ -1,16 +1,27 @@
 # from django import forms
 from account.models import UserAccount
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from contrib.forms import BootstrapAuthForm
 
-class UserRegisterForm(UserCreationForm):
-  template_name_div = 'div.html'
+
+class UserRegisterForm(BootstrapAuthForm, UserCreationForm):
+  help_text_wrapper = {
+    'element': ('div', {'class':'form-text'}),
+    'grouped': ('div', {'class':'helptexts'})
+  }
+  
+
+  # def render(self, *args, **kwargs):
+  #   print(args)
+  #   print(kwargs)
+  #   print()
+  #   temp = super().render(*args, **kwargs)
+  #   print(temp)
+  #   return temp
+    
   class Meta:
     model = UserAccount
     fields = UserCreationForm.Meta.fields + ('email',)
-
-  def as_div(self, *args, **kwargs):
-    """Render as <p> elements."""
-    return self.render(self.template_name_div, *args, **kwargs)
 
   # def clean(self):
   #   super().clean()

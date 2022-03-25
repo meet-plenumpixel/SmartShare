@@ -64,8 +64,9 @@ INSTALLED_APPS = [
   # "crispy_forms",
 
   # apps
-  "home.apps.HomeConfig",
   "account.apps.AccountConfig",
+  "contrib.apps.ContribConfig",
+  "home.apps.HomeConfig",
 ]
 
 MIDDLEWARE = [
@@ -83,9 +84,7 @@ ROOT_URLCONF = "backend.urls"
 TEMPLATES = [
   {
     "BACKEND": "django.template.backends.django.DjangoTemplates",
-    "DIRS": [
-      BASE_DIR("contrib", "templates"),
-    ],
+    "DIRS": [],
     "APP_DIRS": True,
     "OPTIONS": {
       "context_processors": [

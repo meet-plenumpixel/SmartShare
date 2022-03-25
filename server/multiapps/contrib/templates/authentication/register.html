@@ -53,38 +53,43 @@
             </div> 
             -->
 
-            {% if form.non_field_errors %}
+            {% comment %} {% if form.non_field_errors %}
               {% for error in form.non_field_errors %}
               <div class="alert alert-dark" role="alert">
                 {{ error }}
               </div>
               {% endfor %}
-            {% endif %}
+            {% endif %} {% endcomment %}
 
             {% block form_fields %}
 
-              {% if submit_btn == 'login' %}
-                <div class="d-flex justify-content-between align-items-center">
-                  <!-- Checkbox -->
-                  <div class="form-check mb-0">
-                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                    <label class="form-check-label" for="form2Example3">
-                      Remember me
-                    </label>
-                  </div>
-                  <a href="#!" class="text-body">Forgot password?</a>
-                </div>
-              {% endif %}
+              {{ form.as_auth }}
 
-              <div class="text-center text-lg-start mt-4 pt-2">
-                <button type="submit" class="btn btn-primary btn-lg"
-                  style="padding-left: 2.5rem; padding-right: 2.5rem;">
-                  {{submit_btn|lower|capfirst}}
-                </button>
-                <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account?
-                  <a href="{% url form_change_btn %}" class="link-danger">{{form_change_btn|lower|capfirst}}</a>
-                </p>
-              </div>
+              {% with submit_btn="register" form_change_btn="login" %}
+                {% if submit_btn == 'login' %}
+                  <div class="d-flex justify-content-between align-items-center">
+                    <!-- Checkbox -->
+                    <div class="form-check mb-0">
+                      <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                      <label class="form-check-label" for="form2Example3">
+                        Remember me
+                      </label>
+                    </div>
+                    <a href="#!" class="text-body">Forgot password?</a>
+                  </div>
+                {% endif %}
+
+                <div class="text-center text-lg-start mt-4 pt-2">
+                  <button type="submit" class="btn btn-primary btn-lg"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                    {{submit_btn|lower|capfirst}}
+                  </button>
+                  <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account?
+                    <a href="{% url form_change_btn %}" class="link-danger">{{form_change_btn|lower|capfirst}}</a>
+                  </p>
+                </div>
+              {% endwith %}
+
             {% endblock %}
             
           </form>
@@ -93,5 +98,4 @@
     </div>
   </section>
 {% endblock %}
-
 
