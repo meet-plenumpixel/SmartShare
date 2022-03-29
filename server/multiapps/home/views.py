@@ -17,9 +17,6 @@ class HomeTemplateView(MultiFormView):
   success_url = reverse_lazy('home')
 
 
-
-
-
 class UserUpdateView(UpdateView):
   model = user_model.UserAccount
   form_class = user_form.UserUpdateForm
@@ -33,20 +30,54 @@ class UserUpdateView(UpdateView):
     return super().get_object(*args, **kwargs)
 
 
-class UserListView(LoginRequiredMixin, ListView):
+class UserGroupListView(LoginRequiredMixin, ListView):
   login_url = reverse_lazy('login')
   permission_denied_message = 'first login'
 
-  model = user_model.UserAccount
-  template_name = 'users/user_list.html'
-  context_object_name = 'users_profile'
-  # ordering = ['user']
-  paginate_by = 1
+  model = user_model.UserGroup
+  context_object_name = 'groups'
+  template_name = 'user/group_list.html'
+  paginate_by = 5
+  ordering = ('id',)
 
-  def get(self, request, *args, **kwargs):
-    if (paginate_by:=request.GET.get('paginate_by', None)):
-      self.paginate_by = paginate_by
-    self.extra_context = {'paginate_by':self.paginate_by}
+  
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    print(context)
+    return context
+    
 
-    return super().get(request, *args, **kwargs)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# class UserListView(LoginRequiredMixin, ListView):
+#   login_url = reverse_lazy('login')
+#   permission_denied_message = 'first login'
+
+#   model = user_model.UserAccount
+#   template_name = 'users/user_list.html'
+#   context_object_name = 'users_profile'
+#   # ordering = ['user']
+#   paginate_by = 1
+
+#   def get(self, request, *args, **kwargs):
+#     if (paginate_by:=request.GET.get('paginate_by', None)):
+#       self.paginate_by = paginate_by
+#     self.extra_context = {'paginate_by':self.paginate_by}
+
+#     return super().get(request, *args, **kwargs)
 

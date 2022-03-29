@@ -9,7 +9,9 @@ class UserAccount(AbstractUser):
   image = models.ImageField(default='profile_pics/user_default.jpg', upload_to='profile_pics')
 
   class Meta:
+    verbose_name = 'User Account'
     unique_together = (('username', 'email'),)
+    ordering = ('username',)
 
 
 class UserExpense(models.Model):
@@ -19,8 +21,17 @@ class UserExpense(models.Model):
   pay_by = models.ForeignKey('UserAccount', related_name='paid_expenses', on_delete=models.PROTECT)
   contributor = models.ManyToManyField('UserAccount', related_name='expense_contributor')
 
+  class Meta:
+    verbose_name = 'User Expense'
+    ordering = ('pay_by', 'amount')
+
+
 
 class UserGroup(models.Model):
   name = models.CharField(unique=True, max_length=30)
   owner = models.ForeignKey('UserAccount', related_name='my_groups', on_delete=models.PROTECT)
   members = models.ManyToManyField('UserAccount')
+
+  class Meta:
+    verbose_name = 'User Group'
+    ordering = ('owner', 'name')

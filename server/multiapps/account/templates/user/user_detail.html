@@ -16,14 +16,7 @@
       {% csrf_token %}
       <div class="col-md-3 border-right">
         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-          <picture>
-            {% if user.profile.image %}
-              <source srcset="{{ form.image.url }}">
-            {% else %}
-              <source srcset="{% get_media_prefix %}{{form.image.value}} ">
-            {% endif %}
-            <img class="rounded-circle mt-5" width="150px">
-          </picture>
+          <img src="{% get_media_prefix %}{{form.image.value}}" class="rounded-circle mt-5" width="150px">
           <span class="font-weight-bold">{{ form.username.value }}</span>
           <span class="text-black-50">{{ form.email.value }}</span>
         </div>

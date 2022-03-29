@@ -6,6 +6,7 @@ from account.models import UserAccount, UserExpense, UserGroup
 
 @admin.register(UserAccount)
 class UserAccountAdmin(UserAdmin):
+  list_display = ('username', 'first_name', 'last_name', 'email', 'balance', 'is_staff')
   search_fields = ('username','email')
 
   def __init__(self, *args, **kwargs):
