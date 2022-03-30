@@ -3,61 +3,48 @@
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, UpdateView, ListView
+from django.views.generic.edit import CreateView
 from utils.multi_form_view import MultiFormView
 
-from account import forms as user_form
-from account import models as user_model
-
-# Create your views here.
+from home import forms as home_form
+from home import models as home_model
 
 
 # class HomeTemplateView(TemplateView):
 class HomeTemplateView(MultiFormView):
   template_name = 'home/index.html'
   success_url = reverse_lazy('home')
-
-
-class UserUpdateView(UpdateView):
-  model = user_model.UserAccount
-  form_class = user_form.UserUpdateForm
-  template_name = 'user/user_detail.html'
-  success_url = reverse_lazy('profile_detail')
   
+  
+class ExpenseGroupCreateView(LoginRequiredMixin, CreateView):
+  form_class = home_form.ExpenseGroupForm
+  template_name = 'home/create_gp.html'
+  success_url = reverse_lazy('view-gp')
 
-  def get_object(self, *args, **kwargs):
-    self.kwargs[self.pk_url_kwarg] = self.request.user.pk
-    # print(self.kwargs)
-    return super().get_object(*args, **kwargs)
-
-
-class UserGroupListView(LoginRequiredMixin, ListView):
+  def get_form_kwargs(self):
+    kwargs = super().get_form_kwargs()
+    kwargs.update({
+      'user': self.request.user
+    })
+    return kwargs
+  
+  
+class ExpenseGroupListView(LoginRequiredMixin, ListView):
   login_url = reverse_lazy('login')
   permission_denied_message = 'first login'
 
-  model = user_model.UserGroup
+
+  model = home_model.ExpenseGroup
   context_object_name = 'groups'
-  template_name = 'user/group_list.html'
-  paginate_by = 5
+  template_name = 'home/view_gp.html'
   ordering = ('id',)
 
   
   def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    print(context)
-    return context
-    
-
-
-
-
-
-
-
-
-
-
-
-
+      context = super().get_context_data(**kwargs)
+      print(context)
+      return context
+  
 
 
 

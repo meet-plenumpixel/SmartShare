@@ -23,7 +23,7 @@ from django.shortcuts import redirect
 urlpatterns = [
   path('admin/', admin.site.urls, name='admin'),
   path('', include('home.urls')),
-  path('account/', include('account.urls')),
+  path('accounts/', include('account.urls')),
   # path('', lambda _: redirect(reverse('profile')), name='home'),
 ]
 

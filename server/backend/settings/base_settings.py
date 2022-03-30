@@ -63,6 +63,7 @@ INSTALLED_APPS = [
   "widget_tweaks",
   "crispy_forms",
   "crispy_bootstrap5",
+  "extra_views",
 
   # apps
   "account.apps.AccountConfig",
