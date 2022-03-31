@@ -6,7 +6,6 @@ from django.views.generic import TemplateView, UpdateView, ListView
 from django.views.generic.edit import CreateView
 from utils.multi_form_view import MultiFormView
 
-from home import forms as home_form
 from home import models as home_model
 
 
@@ -17,22 +16,30 @@ class HomeTemplateView(MultiFormView):
   
   
 class ExpenseGroupCreateView(LoginRequiredMixin, CreateView):
-  form_class = home_form.ExpenseGroupForm
+  model = home_model.ExpenseGroup
+  fields = ('name', 'members')
   template_name = 'home/create_gp.html'
   success_url = reverse_lazy('view-gp')
 
-  def get_form_kwargs(self):
-    kwargs = super().get_form_kwargs()
-    kwargs.update({
-      'user': self.request.user
-    })
-    return kwargs
+  def get_form(self, form_class=None):
+    form = super().get_form(form_class)
+    form.fields['members'].queryset = form.fields['members'].queryset.exclude(id=self.request.user.pk)
+    return form
+
+  def form_valid(self, form):
+    self.__obj = form.save(commit=False)
+    self.__obj.owner = self.request.user
+    return super().form_valid(self.__obj)
   
-  
+  def get_success_url(self):
+    self.object = self.__obj
+    return super().get_success_url()
+
+
+
 class ExpenseGroupListView(LoginRequiredMixin, ListView):
   login_url = reverse_lazy('login')
   permission_denied_message = 'first login'
-
 
   model = home_model.ExpenseGroup
   context_object_name = 'groups'
