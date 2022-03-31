@@ -38,9 +38,6 @@ class ExpenseGroupCreateView(LoginRequiredMixin, CreateView):
 
 
 class ExpenseGroupListView(LoginRequiredMixin, ListView):
-  login_url = reverse_lazy('login')
-  permission_denied_message = 'first login'
-
   model = home_model.ExpenseGroup
   context_object_name = 'groups'
   template_name = 'home/view_gp.html'
