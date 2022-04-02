@@ -1,0 +1,143 @@
+{% extends "site/base_site.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block extrastyle %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="{% static 'user/css/group_list.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+  {{ users }}
+
+  <div class="container-xl">
+    <div class="table-responsive">
+      <div class="table-wrapper">
+        <div class="table-title">
+          <div class="row">
+            <div class="col-sm-4">
+              <h2>Order <b>Details</b></h2>
+            </div>
+            <div class="col-sm-8">						
+              <a href="#" class="btn btn-primary"><i class="material-icons">add_circle_outline</i> <span>Add New</span></a>
+              <a href="#" class="btn btn-primary"><i class="material-icons">autorenew</i> <span>Refresh List</span></a>
+              <a href="#" class="btn btn-secondary"><i class="material-icons">insert_drive_file</i> <span>Export to Excel</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="table-filter">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="show-entries">
+                <span>Show</span>
+                <select class="form-control form-select form-select-sm">
+                  <option>5</option>
+                  <option>10</option>
+                  <option>15</option>
+                  <option>20</option>
+                </select>
+                <span>entries</span>
+              </div>
+            </div>
+            <div class="col-sm-9">
+              <button type="button" class="btn btn-primary"><i class="material-icons">search</i></button>
+              <div class="filter-group">
+                <label>Name</label>
+                <input type="text" class="form-control">
+              </div>
+
+
+
+              <div class="filter-group">
+                <label>Group</label>
+                <select name="gp" class="form-control form-select form-select-sm" onchange="location=this.value;">
+                  {% for group in groups %}
+                    <option value="?gp={{group.name}}">{{ group.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+
+              
+              <div class="filter-group">
+                <label>Status</label>
+                <select class="form-control form-select form-select-sm">
+                  <option>Any</option>
+                  <option>Delivered</option>
+                  <option>Shipped</option>
+                  <option>Pending</option>
+                  <option>Cancelled</option>
+                </select>
+              </div>
+              <span class="filter-icon"><i class="material-icons">filter_alt</i></span>
+            </div>
+          </div>
+        </div>
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Customer</th>
+              <th>Location</th>
+              <th>Order Date</th>						
+              <th>Status</th>						
+              <th>Net Amount</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><a href="#"><img src="#" class="avatar" alt="Avatar"> Michael Holz</a></td>
+              <td>London</td>
+              <td>Jun 15, 2017</td>            
+              <td><span class="status text-success">•</span> Delivered</td>
+              <td>$254</td>
+              <td><a href="#" class="view" title="" data-toggle="tooltip" data-original-title="View Details"><i class="material-icons">arrow_forward</i></a></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="clearfix">
+          <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+
+
+          {% if is_paginated %}
+          <ul class="pagination">
+
+            {% if page_obj.has_previous %}
+              <li class="page-item disabled"><a href="?page=1">First</a></li>
+              <!-- <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+              <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a> -->
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                <li class="page-item active"><a href="?page={{ num }}" class="page-link">{{ num }}</a></li>
+                <!-- <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a> -->
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item"><a href="?page={{ num }}" class="page-link">{{ num }}</a></li>
+                <!-- <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a> -->
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+              <li class="page-item"><a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">Last</a></li>
+              <!-- <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+              <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a> -->
+            {% endif %}
+
+          </ul>
+        {% endif %}
+
+
+        </div>
+      </div>
+    </div>    
+  </div>
+
+
+{% endblock %}
+
