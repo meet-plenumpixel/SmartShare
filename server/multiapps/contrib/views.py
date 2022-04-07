@@ -1,1 +1,0 @@
-# Create contrib view here.

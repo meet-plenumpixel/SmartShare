@@ -3,7 +3,7 @@ from account.models import Transaction
 # Register your inline model admin here.
 
 
-class TransactionInline(admin.TabularInline):
+class TransactionInlineAdmin(admin.TabularInline):
   model = Transaction
   extra = 1
 

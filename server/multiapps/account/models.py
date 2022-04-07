@@ -32,9 +32,13 @@ class Transaction(models.Model):
   )
 
   amount = models.IntegerField(default=0)
-  return_status = models.BooleanField(choices=((True, 'complete'), (False, 'pending')))
+  return_status = models.BooleanField(default=False, choices=((True, 'complete'), (False, 'pending')))
 
+  class Meta:
+    verbose_name = 'Transaction'
 
+  def __str__(self):
+    return f"payer={self.payer}, borrower={self.borrower}, amount={self.amount}"
 
 
 

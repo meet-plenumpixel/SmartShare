@@ -8,9 +8,9 @@
   
   {% for group in groups %}
     
-    {% for member in group.members %}
-      {{ member }}
-    {% endfor %}
+    {% comment %} {% for member in group.members %} {% endcomment %}
+      {{ group }} </br>
+    {% comment %} {% endfor %} {% endcomment %}
       
   {% endfor %}
 

@@ -95,6 +95,10 @@ TEMPLATES = [
         "django.contrib.auth.context_processors.auth",
         "django.contrib.messages.context_processors.messages",
       ],
+
+      # True: reload template on change
+      # False: no reload on change
+      # "debug": True,
     },
   },
 ]
@@ -174,8 +178,8 @@ AUTH_USER_MODEL = 'account.User'
 
 # third party package settings
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5/widgets"
+CRISPY_TEMPLATE_PACK = "bootstrap5/widgets"
 
 
 __all__ = [i for i in dir() if i.isupper()]
