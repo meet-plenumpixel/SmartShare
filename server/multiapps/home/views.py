@@ -5,8 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView
 
-from home import models as home_model
 from home import forms as home_form
+
 
 # class HomeTemplateView(TemplateView):
 
@@ -18,10 +18,12 @@ class ExpenseGroupCreateView(LoginRequiredMixin, CreateView):
   form_class = home_form.ExpenseGroupForm
   template_name = 'home/expensegroup_form.html'
   success_url = reverse_lazy('view-gp')
-  
+
   def get_form(self, form_class=None):
     form = super().get_form(form_class)
     form.fields['members'].queryset = form.fields['members'].queryset.exclude(id=self.request.user.pk)
+    if self.request.method not in ("POST", "PUT"):
+      del form.fields['owner']
     return form
 
   def get_initial(self):
@@ -30,23 +32,16 @@ class ExpenseGroupCreateView(LoginRequiredMixin, CreateView):
     return initial
 
 
-  # def form_valid(self, form):
-  #   self.__obj = form.save(commit=False)
-  #   self.__obj.owner = self.request.user
-  #   return super().form_valid(self.__obj)
-  
-  # def get_success_url(self):
-  #   self.object = self.__obj
-  #   return super().get_success_url()
-
-
-
 class ExpenseGroupListView(LoginRequiredMixin, ListView):
-  model = home_model.ExpenseGroup
+  template_name = 'home/expensegroup_list.html'
   context_object_name = 'groups'
-  ordering = ('id',)
+  ordering = ('name',)
 
-
+  def get_queryset(self):
+    user = self.request.user
+    # select_related and prefetch_related | Django n+1 Query Problem
+    queryset = ( user.my_groups.all() | user.joined_groups.all() ).distinct()
+    return queryset
 
 
 

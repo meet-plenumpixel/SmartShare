@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block extrastyle %}
+{% block exctracss %}
 <link rel="stylesheet" href="{% static 'user/css/user_detail.css' %}">
 <link rel="stylesheet" href="{% static 'home/css/font-awesome.min.css' %}">
 
@@ -263,7 +263,6 @@
 {% endblock %}
 
 {% block extrajs %}
-<script src="{% static 'home/js/jquery-3.6.0.js' %}"></script>
 <script>
   $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();

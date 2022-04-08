@@ -12,7 +12,7 @@ class ExpenseGroupForm(forms.ModelForm):
     fields = ('name', 'owner', 'members')
 
     widgets = {
-      # 'members': CheckboxSelectMultipleWidget()
+      'members': CheckboxSelectMultipleWidget()
     }
 
   def __init__(self, *args, **kwargs):

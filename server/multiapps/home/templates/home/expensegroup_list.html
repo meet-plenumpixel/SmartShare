@@ -1,18 +1,126 @@
 {% extends "site/base_site.html" %}
-{% load crispy_forms_tags %}
-{% comment %} {% load static %} {% endcomment %}
+{% load crispy_forms_tags static %}
+
+
+{% block exctracss %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="{% static 'datatables/datatables.css' %}">
+<link rel="stylesheet" href="{% static 'user/css/group_list.css' %}">
+{% endblock %}
 
 
 {% block content %}
-
-  
-  {% for group in groups %}
-    
-    {% comment %} {% for member in group.members %} {% endcomment %}
-      {{ group }} </br>
-    {% comment %} {% endfor %} {% endcomment %}
-      
-  {% endfor %}
-
+  <div class="container-xl">
+    <div class="table-responsive">
+      <div class="table-wrapper">
+        <div class="table-title">
+          <div class="row">
+            <div class="col-sm-4">
+              <h2>Group List</h2>
+            </div>
+            <div class="col-sm-8">						
+              <a href="#" class="btn btn-primary"><i class="material-icons">add_circle_outline</i> <span>Add New</span></a>
+              <a href="#" class="btn btn-primary"><i class="material-icons">autorenew</i> <span>Refresh List</span></a>
+              <a href="#" class="btn btn-secondary"><i class="material-icons">insert_drive_file</i> <span>Export to Excel</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="table-filter">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="show-entries">
+                <span>Show</span>
+                <select class="form-control form-select form-select-sm">
+                  <option>5</option>
+                  <option>10</option>
+                  <option>15</option>
+                  <option>20</option>
+                </select>
+                <span>entries</span>
+              </div>
+            </div>
+            <div class="col-sm-9">
+              <button type="button" class="btn btn-primary"><i class="material-icons">search</i></button>
+              <div class="filter-group">
+                <label>Name</label>
+                <input type="text" class="form-control">
+              </div>
+              <div class="filter-group">
+                <label>Group</label>
+                <select name="gp" class="form-control form-select form-select-sm" onchange="location=this.value;">
+                  {% for group in groups %}
+                    <option value="?gp={{group.name}}">{{ group.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="filter-group">
+                <label>Status</label>
+                <select class="form-control form-select form-select-sm">
+                  <option>Any</option>
+                  <option>Delivered</option>
+                  <option>Shipped</option>
+                  <option>Pending</option>
+                  <option>Cancelled</option>
+                </select>
+              </div>
+              <span class="filter-icon"><i class="material-icons">filter_alt</i></span>
+            </div>
+          </div>
+        </div>
+        <table id="example" class="table table-striped" style="width:100%">
+          <thead>
+            <tr>
+              <th>Group Name</th>
+              <th>Group Admin</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for group in groups %}
+              <tr>
+                <td>{{ group.name }}</td>
+                <td>{{ group.owner }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr>
+              <th><input type="text" class="form-control" placeholder="Search Group Name" /></th>
+              <th><input type="text" class="form-control" placeholder="Search Group Admin" /></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>    
+  </div>
 {% endblock %}
-  
+
+
+
+{% block extrajs %}
+  <script src="{% static 'datatables/datatables.js' %}"></script>
+
+  <script>
+    $(document).ready(function() {
+      // DataTable
+      var table = $('#example').DataTable({
+        "lengthMenu": [[-1, 1, 5, 10], ["All", 1, 5, 10]],
+        initComplete: function () {
+          // Apply the search
+          this.api().columns().every( function () {
+            var that = this;
+
+            $( 'input', this.footer() ).on( 'keyup change clear', function () {
+              if ( that.search() !== this.value ) {
+                that
+                  .search( this.value )
+                  .draw();
+              }
+            } );
+          } );
+        }
+      });
+    } );
+  </script>
+{% endblock %}
+
+

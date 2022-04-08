@@ -11,7 +11,7 @@ from home.inlines.inline_admin import ExpenseGroupInlineAdmin
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
-  inlines = [ExpenseGroupInlineAdmin, TransactionInlineAdmin.new_klass(fk_name='payer')]
+  inlines = [ExpenseGroupInlineAdmin, TransactionInlineAdmin.new_klass(fk_name='borrower')]
   list_display = ('username', 'first_name', 'last_name', 'email', 'total_balance', 'total_credit', 'total_debit', 'is_staff')
   search_fields = ('username','email')
   # raw_id_fields = ('exp_groups',)
@@ -27,6 +27,8 @@ class UserAdmin(UserAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-  list_display = ('payer', 'borrower', 'group_through', 'amount', 'return_status')
-  search_fields = ('payer', 'borrower', 'group_through')
+  # Problem: show owner(admin) in admin change_list view (list_display)
+  list_display = ('borrower', 'group_through', 'amount')   #, 'group_through__owner')
+  list_select_related = ('group_through__owner', )
+  search_fields = ('borrower', 'group_through')
 

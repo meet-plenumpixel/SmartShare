@@ -20,10 +20,10 @@ class Expense(models.Model):
 class ExpenseGroup(models.Model):
   name = models.CharField(unique=True, max_length=30)
   owner = models.ForeignKey('account.User', related_name='my_groups', on_delete=models.PROTECT, limit_choices_to={'is_superuser': False})
-  members = models.ManyToManyField(related_name='exp_groups', limit_choices_to={'is_superuser': False},
+  members = models.ManyToManyField(related_name='joined_groups', limit_choices_to={'is_superuser': False},
     to='account.User',
     through='account.Transaction',
-    through_fields=('group_through','payer')
+    through_fields=('group_through','borrower')
   )
 
   class Meta:
