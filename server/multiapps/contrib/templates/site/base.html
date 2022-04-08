@@ -36,11 +36,28 @@
                 Group
               </a>
               <ul class="dropdown-menu dropdown-menu" aria-labelledby="GroupDropdownMenuLink">
-                <li><a class="dropdown-item" href="{% url 'view-gp' %}">View Group</a></li>
-                <li><a class="dropdown-item" href="{% url 'create-gp' %}">Create Group</a></li>
+                <li><a class="dropdown-item" href="{% url 'list_group' %}">View Group</a></li>
+                <li><a class="dropdown-item" href="{% url 'add_group' %}">Create Group</a></li>
                 <li><a class="dropdown-item" href="#">Edit Group</a></li>
                 <li><a class="dropdown-item" href="#">Delete Group</a></li>
               </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle link-dark" href="#" id="GroupDropdownMenuLink" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Expense
+              </a>
+              <ul class="dropdown-menu dropdown-menu" aria-labelledby="GroupDropdownMenuLink">
+                <li><a class="dropdown-item" href="{% url 'list_group' %}">View Expense</a></li>
+                <li><a class="dropdown-item" href="{% url 'add_expense' %}">Add Expense</a></li>
+                <li><a class="dropdown-item" href="#">Edit Expense</a></li>
+                <li><a class="dropdown-item" href="#">Delete Expense</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link link-dark" href="{% url 'repay' %}">
+                RePay
+              </a>
             </li>
           </ul>
         </div>

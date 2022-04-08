@@ -1,0 +1,14 @@
+{% extends "site/base_site.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+  <form action="" method="post">
+    {% csrf_token %}
+    {% crispy form %}
+    <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Save</button>
+  </form>
+
+{% endblock %}
+  
