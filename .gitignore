@@ -162,7 +162,7 @@ cython_debug/
 .vscode/
 
 # Exclude static files from project-app after collectstatic
-static/
+# static/
 
 # contain local environment variables
 server/backend/environ/Dev.env
