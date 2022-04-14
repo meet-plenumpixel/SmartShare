@@ -60,7 +60,7 @@ INSTALLED_APPS = [
   "django.contrib.staticfiles",
 
   # third party
-  "widget_tweaks",
+  # "widget_tweaks",
   "crispy_forms",
   "crispy_bootstrap5",
   "extra_views",
